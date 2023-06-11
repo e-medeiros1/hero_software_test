@@ -7,8 +7,24 @@ import 'package:hero_software_test/app/core/widgets/custom_elevated_button.dart'
 import 'package:hero_software_test/app/core/widgets/custom_text_field.dart';
 import 'package:validatorless/validatorless.dart';
 
-class EmailConfirmationPage extends StatelessWidget {
+import '../../controller/user_auth_controller.dart';
+
+class EmailConfirmationPage extends StatefulWidget {
   const EmailConfirmationPage({super.key});
+
+  @override
+  State<EmailConfirmationPage> createState() => _EmailConfirmationPageState();
+}
+
+class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
+  final userAuthController = Get.put(UserAuthController());
+  final emailEC = TextEditingController();
+
+  @override
+  void dispose() {
+    emailEC.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +53,7 @@ class EmailConfirmationPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 CustomTextField(
+                  controller: emailEC,
                   keyboardType: TextInputType.emailAddress,
                   isMandatory: false,
                   fieldWidth: context.percentWidth(.9),
@@ -45,7 +62,11 @@ class EmailConfirmationPage extends StatelessWidget {
                 ),
                 const Spacer(),
                 CustomElevatedButton(
-                    onPressed: () => Get.toNamed('/password'),
+                    onPressed: () {
+                      userAuthController.resetPassword(
+                          email: emailEC.text.trim());
+                      Get.toNamed('/password');
+                    },
                     buttonTitle: 'PRÓXIMO'),
                 const SizedBox(height: 20),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hero_software_test/app/core/styles/color_style.dart';
 import 'package:hero_software_test/app/core/styles/text_styles.dart';
 
+// ignore: must_be_immutable
 class CustomTextField extends StatefulWidget {
   final String? label;
   final bool isMandatory;

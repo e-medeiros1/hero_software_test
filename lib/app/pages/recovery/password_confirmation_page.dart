@@ -1,32 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hero_software_test/app/controller/user_auth_controller.dart';
 import 'package:hero_software_test/app/core/styles/color_style.dart';
 import 'package:hero_software_test/app/core/styles/text_styles.dart';
 import 'package:hero_software_test/app/core/widgets/custom_elevated_button.dart';
 
-class PasswordConfirmationPage extends StatefulWidget {
+class PasswordConfirmationPage extends StatelessWidget {
   const PasswordConfirmationPage({super.key});
 
   @override
-  State<PasswordConfirmationPage> createState() =>
-      _PasswordConfirmationPageState();
-}
-
-class _PasswordConfirmationPageState extends State<PasswordConfirmationPage> {
-  bool passwordVisibility = false;
-  bool confirmPasswordVisibility = false;
-  final _emailEC = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailEC.dispose;
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final userAuthController = Get.put(UserAuthController());
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
@@ -53,11 +35,7 @@ class _PasswordConfirmationPageState extends State<PasswordConfirmationPage> {
                 const SizedBox(height: 20),
                 const Spacer(),
                 CustomElevatedButton(
-                    onPressed: () {
-                      userAuthController.resetPassword(
-                          email: _emailEC.text.trim());
-                      Get.offNamed('/login');
-                    },
+                    onPressed: () => Get.offNamed('/login'),
                     buttonTitle: 'CONFIRMAR'),
                 const SizedBox(height: 20),
               ],
