@@ -9,7 +9,8 @@ class UserAuthController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
   late final Rx<User?> user;
 
-  void toastMessage(String message) {
+  Future toastMessage({required String message}) async {
+    await Fluttertoast.cancel();
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
@@ -24,17 +25,18 @@ class UserAuthController extends GetxController {
     try {
       instance.signInWithEmailAndPassword(
           email: emailAddress, password: password);
+      toastMessage(message: 'Login bem sucedido!');
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         log('No user found for that email.');
-        toastMessage('Usuário não encontrado!');
+        toastMessage(message: 'Usuário não encontrado!');
       } else if (e.code == 'wrong-password') {
         log('Wrong password provided for that user.');
-        toastMessage('Senha ou e-mail incorretos!');
+        toastMessage(message: 'Senha ou e-mail incorretos!');
       }
     } catch (e) {
       log('ERROR FIREBASE', error: e);
-      toastMessage('Erro ao logar, tente novamente!');
+      toastMessage(message: 'Erro ao logar, tente novamente!');
     }
     update();
   }
@@ -52,21 +54,22 @@ class UserAuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         log('The account already exists for that email.');
-        toastMessage('Este e-mail já está em uso!');
+        toastMessage(message: 'Este e-mail já está em uso!');
       } else if (e.code == 'user-not-found') {
         log('User not found, maybe have been deleted.');
-        toastMessage('Usuário não cadastrado!');
+        toastMessage(message: 'Usuário não cadastrado!');
       }
     } catch (e) {
       log('ERROR FIREBASE', error: e);
-      toastMessage('Erro ao acessar conta, tente novamente!');
+      toastMessage(message: 'Erro ao acessar conta, tente novamente!');
     }
     update();
   }
 
   resetPassword({required String email}) async {
     await instance.sendPasswordResetEmail(email: email).catchError(
-          (error) => toastMessage('Erro ao recuperar senha, tente novamente!'),
+          (error) => toastMessage(
+              message: 'Erro ao recuperar senha, tente novamente!'),
         );
   }
 
@@ -75,7 +78,7 @@ class UserAuthController extends GetxController {
       await instance.signOut();
     } on FirebaseAuthException catch (e) {
       log('Não foi possível sair, tente novamente', error: e);
-      toastMessage('Erro ao sair, tente novamente!');
+      toastMessage(message: 'Erro ao sair, tente novamente!');
     }
     update();
   }
