@@ -9,7 +9,8 @@ class UserAuthController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
   late final Rx<User?> user;
 
-  void toastMessage(String message) {
+  Future toastMessage(String message) async {
+    await Fluttertoast.cancel();
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
@@ -36,7 +37,7 @@ class UserAuthController extends GetxController {
       log('ERROR FIREBASE', error: e);
       toastMessage('Erro ao logar, tente novamente!');
     }
-    // update();
+    update();
   }
 
   Future<void> createAccount({
