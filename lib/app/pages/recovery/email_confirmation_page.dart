@@ -19,6 +19,7 @@ class EmailConfirmationPage extends StatefulWidget {
 class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
   final userAuthController = Get.put(UserAuthController());
   final emailEC = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -37,39 +38,44 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
           ),
           body: Padding(
             padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Digite seu e-mail',
-                  style: context.textStyles.textTitle
-                      .copyWith(color: context.colors.secondary),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'Digite o e-mail cadastrado para receber as instruções de redefinição. Fique tranquilo, você poderá alterá-la em poucos passos.',
-                  style: context.textStyles.textRegular
-                      .copyWith(fontSize: 18, color: Colors.grey.shade600),
-                ),
-                const SizedBox(height: 20),
-                CustomTextField(
-                  controller: emailEC,
-                  keyboardType: TextInputType.emailAddress,
-                  isMandatory: false,
-                  fieldWidth: context.percentWidth(.9),
-                  hintText: 'E-mail',
-                  validation: Validatorless.email('E-mail inválido'),
-                ),
-                const Spacer(),
-                CustomElevatedButton(
-                    onPressed: () {
-                      userAuthController.resetPassword(
-                          email: emailEC.text.trim());
-                      Get.toNamed('/password');
-                    },
-                    buttonTitle: 'PRÓXIMO'),
-                const SizedBox(height: 20),
-              ],
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Digite seu e-mail',
+                    style: context.textStyles.textTitle
+                        .copyWith(color: context.colors.secondary),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Digite o e-mail cadastrado para receber as instruções de redefinição. Fique tranquilo, você poderá alterá-la em poucos passos.',
+                    style: context.textStyles.textRegular
+                        .copyWith(fontSize: 18, color: Colors.grey.shade600),
+                  ),
+                  const SizedBox(height: 20),
+                  CustomTextField(
+                    controller: emailEC,
+                    keyboardType: TextInputType.emailAddress,
+                    isMandatory: false,
+                    fieldWidth: context.percentWidth(.9),
+                    hintText: 'E-mail',
+                    validation: Validatorless.required('E-mail obrigatório'),
+                  ),
+                  const Spacer(),
+                  CustomElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          userAuthController.resetPassword(
+                            email: emailEC.text.trim(),
+                          );
+                        }
+                      },
+                      buttonTitle: 'PRÓXIMO'),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
