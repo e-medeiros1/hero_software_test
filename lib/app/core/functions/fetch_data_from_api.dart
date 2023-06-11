@@ -7,11 +7,12 @@ Future<void> fetchApiData() async {
 
   //token fornecido pela documentação da API: b1933a3d-7d24-4c0c-baf1-663db105cce9
  
-  const token = '';
+ // const token = '';
 
-  final headers = {'security-token': token};
+  //final headers = {'security-token': token};
 
-  final response = await http.get(url, headers: headers);
+  final response = await http.get(url//, headers: headers
+                                 );
 
   if (response.statusCode == 200) {
     final jsonData = response.body;
