@@ -41,17 +41,26 @@ class _HomePageState extends State<HomePage> {
         ),
         body: FutureBuilder(
           future: apiRepository.fetchDataFromAPI(),
-          builder: (context, index) {
-            return ListView.builder(
-              itemCount: apiRepository.listData.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
-                    apiRepository.listData[index]['name'].toString(),
-                  ),
-                );
-              },
-            );
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(color: context.colors.primary),
+              );
+            } else {
+              return ListView.builder(
+                itemCount: apiRepository.listData.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                      apiRepository.listData[index]['name'].toString(),
+                    ),
+                    subtitle: Text(
+                      'Placa do veículo: ${apiRepository.listData[index]['plate'].toString().toUpperCase()}',
+                    ),
+                  );
+                },
+              );
+            }
           },
         ),
       ),
