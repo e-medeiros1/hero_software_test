@@ -189,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         });
                       },
                       child: Icon(
-                        passwordVisibility == true
+                        confirmPasswordVisibility == true
                             ? Icons.visibility_outlined
                             : Icons.visibility_off_outlined,
                         color: Colors.grey.shade500,
