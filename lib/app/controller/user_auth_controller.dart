@@ -22,7 +22,7 @@ class UserAuthController extends GetxController {
   Future<void> loginWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
-      instance.signInWithEmailAndPassword(
+      await instance.signInWithEmailAndPassword(
           email: emailAddress, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -36,7 +36,7 @@ class UserAuthController extends GetxController {
       log('ERROR FIREBASE', error: e);
       toastMessage('Erro ao logar, tente novamente!');
     }
-    update();
+    // update();
   }
 
   Future<void> createAccount({
