@@ -4,7 +4,9 @@ Future<void> fetchApiData() async {
   //URL da API deve ser referente a requisição que tu precisa.
   //Passa ela como parâmetro e chama a função no passando a url do que tu precisa!
   final url = Uri.parse('https://api.carro.cash/user/app/historic');
-  const token = 'b1933a3d-7d24-4c0c-baf1-663db105cce9';
+
+  //token fornecido pela documentação da API: b1933a3d-7d24-4c0c-baf1-663db105cce9
+  const token = '';
 
   final headers = {'security-token': token};
 
