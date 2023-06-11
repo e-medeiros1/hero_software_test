@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hero_software_test/app/controller/user_auth_controller.dart';
+import 'package:hero_software_test/app/core/functions/fetch_data_from_api.dart';
 import 'package:hero_software_test/app/core/helper/size_extensions.dart';
 import 'package:hero_software_test/app/core/styles/color_style.dart';
 import 'package:hero_software_test/app/core/styles/text_styles.dart';

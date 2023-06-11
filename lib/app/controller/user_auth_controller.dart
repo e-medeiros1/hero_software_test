@@ -8,28 +8,16 @@ class UserAuthController extends GetxController {
   final FirebaseAuth instance = FirebaseAuth.instance;
   late final Rx<User?> user;
 
-  snackMessage({required String message}) {
-    Get.showSnackbar(
-      GetSnackBar(
-        snackPosition: SnackPosition.TOP,
-        borderRadius: 10,
-        margin: const EdgeInsets.all(20),
-        backgroundColor: const Color(0xFF9ff238),
-        isDismissible: true,
-        duration: const Duration(seconds: 2),
-        borderColor: Colors.black87,
-        titleText: const Text(
-          'Erro!',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        messageText: Text(
-          message,
-          style: const TextStyle(fontSize: 17),
-        ),
-      ),
-    );
-  }
-
+  Future toastMessage(String message) async {
+    await Fluttertoast.cancel();
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 17);
+  
   Future<void> loginWithEmailAndPassword(
       {required String emailAddress, required String password}) async {
     try {
